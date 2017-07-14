@@ -11,6 +11,9 @@ namespace CompleteProject
         [SerializeField]
         private EnemyManager enemyManager;
 
+        [SerializeField]
+        private PlayerHealth playerHealth;
+
         private string savePath;
 
         void Awake()
@@ -48,8 +51,13 @@ namespace CompleteProject
 
         private PlayerData CreatePlayerData()
         {
-            // TODO Implement
-            return new PlayerData {Health = 100, Score = 200};
+            int health = playerHealth.currentHealth;
+            int score = ScoreManager.score;
+            return new PlayerData
+            {
+                Health = health,
+                Score = score
+            };
         }
 
         private void SerializeSaveData(GameSave gameSaveData)
