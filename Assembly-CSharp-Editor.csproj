@@ -82,7 +82,7 @@
      <Compile Include="Assets\PostProcessing\Editor\Utils\ReflectionUtils.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
      <Compile Include="Assets\_Complete-Game\MobileInput\Scripts\Editor\CrossPlatformInputInitialize.cs" />
-     <Compile Include="Assets\_Complete-Game\Scripts\Managers\Editor\SaveManagerEditor.cs" />
+     <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\Editor\SaveManagerEditor.cs" />
      <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\MotionBlur.cginc" />
      <None Include="Assets\PostProcessing\Resources\Shaders\Fog.shader" />
