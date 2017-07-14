@@ -11,17 +11,19 @@ namespace CompleteProject
     {
         private static SaveManager instance;
 
+        // Settings
+        private const string saveFileName = "save.dat";
+
+        // Refs
         private EnemyManager enemyManager;
         private PlayerHealth playerHealth;
 
-        // If true, apply game save on SceneManager.sceneLoaded callback
-        private bool applyGameSaveOnSceneLoaded;
-
-        // Deserialized game save data
+        // Helpers
         private GameSave saveData;
         private string savePath;
 
-        private const string saveFileName = "save.dat";
+        // If true, apply game save on SceneManager.sceneLoaded callback
+        private bool applyGameSaveOnSceneLoaded;
 
         void Awake()
         {
@@ -83,7 +85,7 @@ namespace CompleteProject
 
         public void Save()
         {
-            List<GameObject> enemies = enemyManager.GetAllAliveEnemies();
+            //List<GameObject> enemies = enemyManager.GetAllAliveEnemies();
 
             // create save data object
             PlayerData playerData = CreatePlayerData();
@@ -98,13 +100,28 @@ namespace CompleteProject
         private PlayerData CreatePlayerData()
         {
             int health = playerHealth.currentHealth;
-            Debug.Log("CreatePlayerData() health: " + health);
             int score = ScoreManager.score;
-            return new PlayerData
+
+            SVector3 position = GetPlayerSerializablePosition();
+
+            PlayerData playerData = new PlayerData
             {
                 Health = health,
-                Score = score
+                Score = score,
+                Position = position
             };
+
+            Debug.Log("Save(), playerData.Position: " + playerData.Position);
+
+            return playerData;
+        }
+
+        private SVector3 GetPlayerSerializablePosition()
+        {
+            Vector3 position = playerHealth.transform.position;
+            SVector3 serializablePos = new SVector3(position);
+
+            return serializablePos;
         }
 
         private void SerializeSaveData(GameSave gameSaveData)
@@ -155,6 +172,15 @@ namespace CompleteProject
             playerHealth.currentHealth = healthValue;
             // TODO this should be done automatically in the PlayerHealth class via property or setter method
             playerHealth.healthSlider.value = healthValue;
+
+            // update player position
+            // TODO update through rigidbody instead of transform
+            Rigidbody playerRigidbody = playerHealth.transform.GetComponent<Rigidbody>();
+            //playerRigidbody.position = saveData.PlayerData.Position.Base();
+            playerHealth.transform.position = saveData.PlayerData.Position.Base();
+            Debug.Log("ApplySaveDataToGame(), playerData.Position: " + saveData.PlayerData.Position);
+            //Debug.Log("ApplySaveDataToGame(), playerRigidbody.position: " + playerRigidbody.position);
+            Debug.Log("ApplySaveDataToGame(), playerHealth.transform.position: " + playerHealth.transform.position);
 
             // update game score
             ScoreManager.score = saveData.PlayerData.Score;

@@ -26,7 +26,7 @@ namespace CompleteProject
 
         void Awake ()
         {
-            Debug.Log("PlayerHealth.Awake()");
+            //Debug.Log("PlayerHealth.Awake()");
 
             // Setting up the references.
             anim = GetComponent <Animator> ();
@@ -61,7 +61,8 @@ namespace CompleteProject
 
         public void TakeDamage (int amount)
         {
-            Debug.Log("PlayerHealth.TakeDamage() currentHealth: " + currentHealth);
+            //Debug.Log("PlayerHealth.TakeDamage() currentHealth: " + currentHealth);
+
             // Set the damaged flag so the screen will flash.
             damaged = true;
 
