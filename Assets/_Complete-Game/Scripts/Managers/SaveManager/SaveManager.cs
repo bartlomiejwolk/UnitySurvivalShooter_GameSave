@@ -137,22 +137,28 @@ namespace CompleteProject
             List<GameObject> enemyGOs = enemyManager.GetAllAliveEnemies();
             foreach (var enemy in enemyGOs)
             {
-                string prefabName = ConvertGameObjectNameToPrefabName(enemy.name);
-                int enemyHealth = GetEnemyHealth(enemy);
-                SVector3 enemySerializablePos = GetEnemySerializablePosition(enemy);
-                SVector3 serializableRot = GetEnemySerializableRotation(enemy);
-
-                EnemyData enemyData = new EnemyData()
-                {
-                    PrefabName = prefabName,
-                    Health = enemyHealth,
-                    Position = enemySerializablePos,
-                    Rotation = serializableRot
-                };
+                EnemyData enemyData = CreateEnemyData(enemy);
                 output.Add(enemyData);
             }
 
             return output;
+        }
+
+        private EnemyData CreateEnemyData(GameObject enemy)
+        {
+            string prefabName = ConvertGameObjectNameToPrefabName(enemy.name);
+            int enemyHealth = GetEnemyHealth(enemy);
+            SVector3 enemySerializablePos = GetEnemySerializablePosition(enemy);
+            SVector3 serializableRot = GetEnemySerializableRotation(enemy);
+
+            EnemyData enemyData = new EnemyData()
+            {
+                PrefabName = prefabName,
+                Health = enemyHealth,
+                Position = enemySerializablePos,
+                Rotation = serializableRot
+            };
+            return enemyData;
         }
 
         private SVector3 GetPlayerSerializablePosition()
