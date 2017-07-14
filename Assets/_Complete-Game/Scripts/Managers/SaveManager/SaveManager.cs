@@ -46,6 +46,11 @@ namespace CompleteProject
                 }
             }
 
+            InitClassMembers();
+        }
+
+        private void InitClassMembers()
+        {
             savePath = Application.persistentDataPath + "/" + saveFileName;
 
             SceneManager.sceneLoaded -= OnSceneLoaded;
