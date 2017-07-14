@@ -9,6 +9,8 @@ namespace CompleteProject
 {
     public class SaveManager : MonoBehaviour
     {
+        private static SaveManager instance;
+
         private EnemyManager enemyManager;
         private PlayerHealth playerHealth;
 
@@ -23,12 +25,25 @@ namespace CompleteProject
 
         void Awake()
         {
-            DontDestroyOnLoad(this);
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(this);
+            }
+            else
+            {
+                if (this != instance)
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+            }
 
             // TODO create constant for the save file name
             savePath = Application.persistentDataPath + "/save.dat";
             Debug.Log(savePath);
 
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             playerHealth = FindObjectOfType<PlayerHealth>();
