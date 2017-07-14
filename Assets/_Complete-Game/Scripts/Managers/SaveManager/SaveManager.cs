@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace CompleteProject
 {
@@ -19,10 +21,12 @@ namespace CompleteProject
         private PlayerHealth playerHealth;
 
         // Helpers
+        // TODO see if you can remove any of them
         private GameSave saveData;
         private string savePath;
 
         // If true, apply game save on SceneManager.sceneLoaded callback
+        // TODO see if using flag can be avoided
         private bool applyGameSaveOnSceneLoaded;
 
         #region UNITY_CALLBACKS
@@ -142,6 +146,7 @@ namespace CompleteProject
         private List<EnemyData> CreateEnemiesData()
         {
             List<GameObject> enemyGOs = enemyManager.GetAllAliveEnemies();
+            List<EnemyData> output = new List<EnemyData>();
 
             // TODO extract method
             foreach (var enemy in enemyGOs)
@@ -157,12 +162,12 @@ namespace CompleteProject
                 {
                     enemyHealth = enemyHealthComp.currentHealth;
                 }
-                Debug.Log("CreateEnemiesData(), enemy health: " + enemyHealth);
+                //Debug.Log("CreateEnemiesData(), enemy health: " + enemyHealth);
 
                 // get enemy position
                 Vector3 enemyPos = enemy.transform.position;
                 SVector3 enemySerializablePos = new SVector3(enemyPos);
-                Debug.Log("CreateEnemiesData(), enemy position: " + enemyPos);
+                //Debug.Log("CreateEnemiesData(), enemy position: " + enemyPos);
 
                 EnemyData enemyData = new EnemyData()
                 {
@@ -170,9 +175,10 @@ namespace CompleteProject
                     Health = enemyHealth,
                     Position = enemySerializablePos
                 };
+                output.Add(enemyData);
             }
 
-            return null;
+            return output;
         }
 
         private string ConvertGameObjectNameToPrefabName(string enemyName)
@@ -204,6 +210,7 @@ namespace CompleteProject
 
         #region LOADING
 
+        // TODO This could be wrapped in try/catch in case there's a null in the GameSave obj
         public void Load()
         {
             saveData = DeserializeSaveData();
@@ -256,9 +263,27 @@ namespace CompleteProject
             // update game score
             ScoreManager.score = saveData.PlayerData.Score;
             //Debug.Log("ApplySaveDataToGame() saveData.PlayerData.Health: " + saveData.PlayerData.Health);
+
+            ApplyEnemySaveData();
         }
 
-        // TODO This could be wrapped in try/catch in case there's a null in the GameSave obj
+        // TODO Don't use Resources folder. Use direct prefab references.
+        private void ApplyEnemySaveData()
+        {
+            foreach (var enemyData in saveData.EnemiesData)
+            {
+                // instantiate enemy
+                Debug.Log("prefabName: " + enemyData.PrefabName);
+                Object prefab = Resources.Load(enemyData.PrefabName);
+                Vector3 pos = enemyData.Position.Base();
+                // TODO implement rotation
+                GameObject instanceRef = (GameObject)Instantiate(prefab, pos, Quaternion.identity);
+
+                // update `EnemyManager`
+                enemyManager.AddSpawnedEnemy(instanceRef);
+            }
+        }
+
     }
 #endregion LOADING
 

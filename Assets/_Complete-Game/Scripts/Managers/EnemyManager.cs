@@ -10,12 +10,26 @@ namespace CompleteProject
         public float spawnTime = 3f;            // How long between each spawn.
         public Transform[] spawnPoints;         // An array of the spawn points this enemy can spawn from.
 
+        // TODO Make it instance field
         private static readonly List<GameObject> aliveEnemies = new List<GameObject>();
+
+        void Awake()
+        {
+            // If those values persisted after level reload,
+            // the game save functionality would try to access refs.
+            // to destroyed game objects.
+            aliveEnemies.Clear();   
+        }
 
         void Start ()
         {
             // Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
             InvokeRepeating ("Spawn", spawnTime, spawnTime);
+        }
+
+        public void AddSpawnedEnemy(GameObject enemy)
+        {
+            aliveEnemies.Add(enemy);
         }
 
         public List<GameObject> GetAllAliveEnemies()
