@@ -75,11 +75,10 @@ namespace CompleteProject
 
         public void Save()
         {
-            // create save data object
-            // TODO extract
             GameData gameData = CreateGameData();
             PlayerData playerData = CreatePlayerData();
             List<EnemyData> enemiesData = CreateEnemiesData();
+
             GameSave gameSaveData = new GameSave
             {
                 PlayerData = playerData,
@@ -123,30 +122,15 @@ namespace CompleteProject
 
         private List<EnemyData> CreateEnemiesData()
         {
-            List<GameObject> enemyGOs = enemyManager.GetAllAliveEnemies();
             List<EnemyData> output = new List<EnemyData>();
 
-            // TODO extract method
+            List<GameObject> enemyGOs = enemyManager.GetAllAliveEnemies();
             foreach (var enemy in enemyGOs)
             {
-                // get prefab name
                 string prefabName = ConvertGameObjectNameToPrefabName(enemy.name);
-
-                // get enemy health
-                EnemyHealth enemyHealthComp = enemy.GetComponent<EnemyHealth>();
-                int enemyHealth = 0;
-                if (enemyHealthComp)
-                {
-                    enemyHealth = enemyHealthComp.currentHealth;
-                }
-
-                // get enemy position
-                Vector3 enemyPos = enemy.transform.position;
-                SVector3 enemySerializablePos = new SVector3(enemyPos);
-
-                // get enemy rotation
-                Vector3 rot = enemy.transform.rotation.eulerAngles;
-                SVector3 serializableRot = new SVector3(rot);
+                int enemyHealth = GetEnemyHealth(enemy);
+                SVector3 enemySerializablePos = GetEnemySerializablePosition(enemy);
+                SVector3 serializableRot = GetEnemySerializableRotation(enemy);
 
                 EnemyData enemyData = new EnemyData()
                 {
@@ -159,6 +143,31 @@ namespace CompleteProject
             }
 
             return output;
+        }
+
+        private static SVector3 GetEnemySerializableRotation(GameObject enemy)
+        {
+            Vector3 rot = enemy.transform.rotation.eulerAngles;
+            SVector3 serializableRot = new SVector3(rot);
+            return serializableRot;
+        }
+
+        private static SVector3 GetEnemySerializablePosition(GameObject enemy)
+        {
+            Vector3 enemyPos = enemy.transform.position;
+            SVector3 enemySerializablePos = new SVector3(enemyPos);
+            return enemySerializablePos;
+        }
+
+        private static int GetEnemyHealth(GameObject enemy)
+        {
+            EnemyHealth enemyHealthComp = enemy.GetComponent<EnemyHealth>();
+            int enemyHealth = 0;
+            if (enemyHealthComp)
+            {
+                enemyHealth = enemyHealthComp.currentHealth;
+            }
+            return enemyHealth;
         }
 
         private string ConvertGameObjectNameToPrefabName(string enemyName)
