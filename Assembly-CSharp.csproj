@@ -117,7 +117,6 @@
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\EnemyManager.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\GameOverManager.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\PauseManager.cs" />
-     <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\EnemiesData.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\EnemyData.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\GameData.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\GameSave.cs" />

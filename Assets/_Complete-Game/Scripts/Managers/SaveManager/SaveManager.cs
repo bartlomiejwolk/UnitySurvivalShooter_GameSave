@@ -92,12 +92,15 @@ namespace CompleteProject
             //List<GameObject> enemies = enemyManager.GetAllAliveEnemies();
 
             // create save data object
+            // TODO extract
             GameData gameData = CreateGameData();
             PlayerData playerData = CreatePlayerData();
+            List<EnemyData> enemiesData = CreateEnemiesData();
             GameSave gameSaveData = new GameSave
             {
                 PlayerData = playerData,
-                GameData = gameData
+                GameData = gameData,
+                EnemiesData = enemiesData
             };
 
             SerializeSaveData(gameSaveData);
@@ -134,6 +137,11 @@ namespace CompleteProject
             Debug.Log("Save(), playerData.Position: " + playerData.Position);
 
             return playerData;
+        }
+
+        private List<EnemyData> CreateEnemiesData()
+        {
+            return null;
         }
 
         private SVector3 GetPlayerSerializablePosition()
