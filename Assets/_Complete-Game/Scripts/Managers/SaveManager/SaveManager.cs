@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -60,7 +61,6 @@ namespace CompleteProject
             enemyManager = FindObjectOfType<EnemyManager>();
         }
 
-        // 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
         {
             if (!applyGameSaveOnSceneLoaded)
@@ -118,7 +118,6 @@ namespace CompleteProject
         {
             int health = playerHealth.currentHealth;
             int score = ScoreManager.score;
-
             SVector3 position = GetPlayerSerializablePosition();
 
             PlayerData playerData = new PlayerData
@@ -191,7 +190,7 @@ namespace CompleteProject
 
         private string ConvertGameObjectNameToPrefabName(string enemyName)
         {
-            int parenthesisIndex = enemyName.IndexOf("(");
+            int parenthesisIndex = enemyName.IndexOf("(", StringComparison.Ordinal);
             string prefabName = enemyName.Substring(0, parenthesisIndex);
 
             return prefabName;
@@ -261,8 +260,6 @@ namespace CompleteProject
         private void ApplyPlayerPosition()
         {
             // TODO update through rigidbody instead of transform
-            Rigidbody playerRigidbody = playerHealth.transform.GetComponent<Rigidbody>();
-            //playerRigidbody.position = saveData.PlayerData.Position.Base();
             playerHealth.transform.position = saveData.PlayerData.Position.Base();
         }
 
