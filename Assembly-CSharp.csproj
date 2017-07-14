@@ -90,15 +90,6 @@
      <Compile Include="Assets\PostProcessing\Runtime\Utils\GraphicsUtils.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Utils\MaterialFactory.cs" />
      <Compile Include="Assets\PostProcessing\Runtime\Utils\RenderTextureFactory.cs" />
-     <Compile Include="Assets\Scripts\Enemy\EnemyAttack.cs" />
-     <Compile Include="Assets\Scripts\Enemy\EnemyHealth.cs" />
-     <Compile Include="Assets\Scripts\Enemy\EnemyMovement.cs" />
-     <Compile Include="Assets\Scripts\Managers\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\Managers\GameOverManager.cs" />
-     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerShooting.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\_Complete-Game\MobileInput\Scripts\CrossPlatformInputManager.cs" />
      <Compile Include="Assets\_Complete-Game\MobileInput\Scripts\Joystick.cs" />
