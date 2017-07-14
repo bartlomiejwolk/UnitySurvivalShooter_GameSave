@@ -52,6 +52,7 @@ namespace CompleteProject
         private PlayerData CreatePlayerData()
         {
             int health = playerHealth.currentHealth;
+            Debug.Log("CreatePlayerData() health: " + health);
             int score = ScoreManager.score;
             return new PlayerData
             {
@@ -72,7 +73,31 @@ namespace CompleteProject
 
         public void Load()
         {
+            GameSave saveData = DeserializeSaveData();
+            ApplySaveDataToGame(saveData);
+        }
 
+        // TODO This could be wrapped in try/catch in case there's a null in the GameSave obj
+        private void ApplySaveDataToGame(GameSave saveData)
+        {
+            playerHealth.currentHealth = saveData.PlayerData.Health;
+            Debug.Log("ApplySaveDataToGame() saveData.PlayerData.Health: " + saveData.PlayerData.Health);
+            ScoreManager.score = saveData.PlayerData.Score;
+        }
+
+        private GameSave DeserializeSaveData()
+        {
+            if (!File.Exists(savePath))
+            {
+                return new GameSave();
+            }
+
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            FileStream fileStream = File.Open(savePath, FileMode.Open);
+            GameSave saveData = (GameSave)binaryFormatter.Deserialize(fileStream);
+            fileStream.Close();
+
+            return saveData;
         }
     }
 
