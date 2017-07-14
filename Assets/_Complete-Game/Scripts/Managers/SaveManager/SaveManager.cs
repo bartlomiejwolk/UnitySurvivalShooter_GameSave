@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CompleteProject
 {
@@ -16,11 +17,34 @@ namespace CompleteProject
 
         private string savePath;
 
+        // Deserialized game save data
+        private GameSave saveData;
+
+        // If true, when a scene gets loaded, game save will be applied
+        private bool loadGameOnSceneLoaded = false;
+
         void Awake()
         {
+            DontDestroyOnLoad(this);
+
             // TODO create constant for the save file name
             savePath = Application.persistentDataPath + "/save.dat";
             Debug.Log(savePath);
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        // 
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
+        {
+            if (!loadGameOnSceneLoaded)
+            {
+                return;
+            }
+
+            Debug.Log("OnSceneLoaded()");
+
+            ApplySaveDataToGame();
         }
 
         // Use this for initialization
@@ -73,12 +97,17 @@ namespace CompleteProject
 
         public void Load()
         {
-            GameSave saveData = DeserializeSaveData();
-            ApplySaveDataToGame(saveData);
+            saveData = DeserializeSaveData();
+
+            // TODO if saveData is empty, inform the user end return
+
+            // reload level
+            Scene currentScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(currentScene.buildIndex);
         }
 
         // TODO This could be wrapped in try/catch in case there's a null in the GameSave obj
-        private void ApplySaveDataToGame(GameSave saveData)
+        private void ApplySaveDataToGame()
         {
             int healthValue = saveData.PlayerData.Health;
             playerHealth.currentHealth = healthValue;
