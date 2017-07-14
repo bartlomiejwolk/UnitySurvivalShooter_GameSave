@@ -6,6 +6,8 @@ namespace CompleteProject
 {
     public class SaveManager : MonoBehaviour
     {
+        [SerializeField]
+        private EnemyManager enemyManager;
 
         // Use this for initialization
         void Start()

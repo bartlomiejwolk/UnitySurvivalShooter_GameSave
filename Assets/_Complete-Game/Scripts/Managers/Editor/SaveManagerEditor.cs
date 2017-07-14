@@ -17,6 +17,8 @@ namespace CompleteProject
 
         public override void OnInspectorGUI()
         {
+            DrawDefaultInspector();
+
             EditorGUILayout.BeginHorizontal();
 
             DrawSaveButton();
