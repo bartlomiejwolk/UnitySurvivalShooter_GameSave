@@ -282,18 +282,21 @@ namespace CompleteProject
         {
             foreach (var enemyData in saveData.EnemiesData)
             {
-                // instantiate enemy
-                Object prefab = Resources.Load(enemyData.PrefabName);
-                Vector3 pos = enemyData.Position.Base();
-                Vector3 rot = enemyData.Rotation.Base();
-                Quaternion quaternionRot = Quaternion.Euler(rot);
-                GameObject instanceRef = (GameObject)Instantiate(prefab, pos, quaternionRot);
-
-                // update `EnemyManager`
-                enemyManager.AddSpawnedEnemy(instanceRef);
+                InstantiateEnemy(enemyData);
             }
         }
 
+        private void InstantiateEnemy(EnemyData enemyData)
+        {
+            Object prefab = Resources.Load(enemyData.PrefabName);
+            Vector3 pos = enemyData.Position.Base();
+            Vector3 rot = enemyData.Rotation.Base();
+            Quaternion quaternionRot = Quaternion.Euler(rot);
+            GameObject instanceRef = (GameObject) Instantiate(prefab, pos, quaternionRot);
+
+            // update `EnemyManager`
+            enemyManager.AddSpawnedEnemy(instanceRef);
+        }
     }
 #endregion LOADING
 
