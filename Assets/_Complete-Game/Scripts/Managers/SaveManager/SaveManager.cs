@@ -20,8 +20,7 @@ namespace CompleteProject
         private GameSave saveData;
 
         // If true, when a scene gets loaded, game save will be applied
-        // TODO rename to applyGameSaveOnSceneLoaded
-        private bool loadGameOnSceneLoaded = false;
+        private bool applyGameSaveOnSceneLoaded;
 
         void Awake()
         {
@@ -53,7 +52,7 @@ namespace CompleteProject
         // 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
         {
-            if (!loadGameOnSceneLoaded)
+            if (!applyGameSaveOnSceneLoaded)
             {
                 return;
             }
@@ -121,7 +120,7 @@ namespace CompleteProject
 
             // TODO if saveData is empty, inform the user end return
 
-            loadGameOnSceneLoaded = true;
+            applyGameSaveOnSceneLoaded = true;
 
             // reload level
             Scene currentScene = SceneManager.GetActiveScene();
