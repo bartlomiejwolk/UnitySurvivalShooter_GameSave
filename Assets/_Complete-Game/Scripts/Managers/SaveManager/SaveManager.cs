@@ -38,20 +38,20 @@ namespace CompleteProject
         // 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
         {
-            if (!loadGameOnSceneLoaded)
-            {
-                return;
-            }
-
             Debug.Log("OnSceneLoaded()");
-
-            ApplySaveDataToGame();
         }
 
         // Use this for initialization
         void Start()
         {
+            if (!loadGameOnSceneLoaded)
+            {
+                return;
+            }
+
             Debug.Log("SaveManager.Start()");
+
+            ApplySaveDataToGame();
         }
 
         // Update is called once per frame
