@@ -26,6 +26,8 @@ namespace CompleteProject
 
         void Awake ()
         {
+            Debug.Log("PlayerHealth.Awake()");
+
             // Setting up the references.
             anim = GetComponent <Animator> ();
             playerAudio = GetComponent <AudioSource> ();
@@ -59,6 +61,7 @@ namespace CompleteProject
 
         public void TakeDamage (int amount)
         {
+            Debug.Log("PlayerHealth.TakeDamage() currentHealth: " + currentHealth);
             // Set the damaged flag so the screen will flash.
             damaged = true;
 

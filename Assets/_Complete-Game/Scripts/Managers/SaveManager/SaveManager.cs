@@ -53,20 +53,24 @@ namespace CompleteProject
         // 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
         {
-            Debug.Log("OnSceneLoaded()");
-        }
-
-        // Use this for initialization
-        void Start()
-        {
             if (!loadGameOnSceneLoaded)
             {
                 return;
             }
 
-            Debug.Log("SaveManager.Start()");
+            Debug.Log("OnSceneLoaded()");
+
+            playerHealth = FindObjectOfType<PlayerHealth>();
+            enemyManager = FindObjectOfType<EnemyManager>();
 
             ApplySaveDataToGame();
+        }
+
+        // Use this for initialization
+        void Start()
+        {
+            Debug.Log("SaveManager.Start()");
+            
         }
 
         // Update is called once per frame
@@ -133,6 +137,7 @@ namespace CompleteProject
             playerHealth.healthSlider.value = healthValue;
             Debug.Log("ApplySaveDataToGame() saveData.PlayerData.Health: " + saveData.PlayerData.Health);
             ScoreManager.score = saveData.PlayerData.Score;
+            Debug.Log("ApplySaveDataToGame() playerHealth.currentHealth: " + playerHealth.currentHealth);
         }
 
         private GameSave DeserializeSaveData()
