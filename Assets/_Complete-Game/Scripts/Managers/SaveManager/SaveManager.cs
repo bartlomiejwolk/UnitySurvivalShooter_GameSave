@@ -142,21 +142,23 @@ namespace CompleteProject
 
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             FileStream fileStream = File.Open(savePath, FileMode.Open);
-            GameSave saveData = (GameSave)binaryFormatter.Deserialize(fileStream);
+            GameSave save = (GameSave)binaryFormatter.Deserialize(fileStream);
             fileStream.Close();
 
-            return saveData;
+            return save;
         }
 
         private void ApplySaveDataToGame()
         {
+            // update player health
             int healthValue = saveData.PlayerData.Health;
             playerHealth.currentHealth = healthValue;
             // TODO this should be done automatically in the PlayerHealth class via property or setter method
             playerHealth.healthSlider.value = healthValue;
-            Debug.Log("ApplySaveDataToGame() saveData.PlayerData.Health: " + saveData.PlayerData.Health);
+
+            // update game score
             ScoreManager.score = saveData.PlayerData.Score;
-            Debug.Log("ApplySaveDataToGame() playerHealth.currentHealth: " + playerHealth.currentHealth);
+            //Debug.Log("ApplySaveDataToGame() saveData.PlayerData.Health: " + saveData.PlayerData.Health);
         }
 
         // TODO This could be wrapped in try/catch in case there's a null in the GameSave obj
