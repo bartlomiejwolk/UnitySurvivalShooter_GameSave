@@ -80,7 +80,10 @@ namespace CompleteProject
         // TODO This could be wrapped in try/catch in case there's a null in the GameSave obj
         private void ApplySaveDataToGame(GameSave saveData)
         {
-            playerHealth.currentHealth = saveData.PlayerData.Health;
+            int healthValue = saveData.PlayerData.Health;
+            playerHealth.currentHealth = healthValue;
+            // TODO this should be done automatically in the PlayerHealth class via property or setter method
+            playerHealth.healthSlider.value = healthValue;
             Debug.Log("ApplySaveDataToGame() saveData.PlayerData.Health: " + saveData.PlayerData.Health);
             ScoreManager.score = saveData.PlayerData.Score;
         }
