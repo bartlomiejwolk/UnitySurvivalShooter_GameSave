@@ -23,7 +23,7 @@ namespace CompleteProject
 
         public void Save()
         {
-
+            List<GameObject> enemies = enemyManager.GetAllAliveEnemies();
         }
 
         public void Load()

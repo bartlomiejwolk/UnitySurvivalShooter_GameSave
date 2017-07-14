@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace CompleteProject
 {
@@ -16,6 +17,10 @@ namespace CompleteProject
             InvokeRepeating ("Spawn", spawnTime, spawnTime);
         }
 
+        public List<GameObject> GetAllAliveEnemies()
+        {
+            return new List<GameObject>();
+        }
 
         void Spawn ()
         {
