@@ -9,10 +9,7 @@ namespace CompleteProject
 {
     public class SaveManager : MonoBehaviour
     {
-        [SerializeField]
         private EnemyManager enemyManager;
-
-        [SerializeField]
         private PlayerHealth playerHealth;
 
         private string savePath;
@@ -21,6 +18,7 @@ namespace CompleteProject
         private GameSave saveData;
 
         // If true, when a scene gets loaded, game save will be applied
+        // TODO rename to applyGameSaveOnSceneLoaded
         private bool loadGameOnSceneLoaded = false;
 
         void Awake()
@@ -32,6 +30,9 @@ namespace CompleteProject
             Debug.Log(savePath);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            playerHealth = FindObjectOfType<PlayerHealth>();
+            enemyManager = FindObjectOfType<EnemyManager>();
         }
 
         // 
@@ -50,7 +51,7 @@ namespace CompleteProject
         // Use this for initialization
         void Start()
         {
-
+            Debug.Log("SaveManager.Start()");
         }
 
         // Update is called once per frame
@@ -100,6 +101,8 @@ namespace CompleteProject
             saveData = DeserializeSaveData();
 
             // TODO if saveData is empty, inform the user end return
+
+            loadGameOnSceneLoaded = true;
 
             // reload level
             Scene currentScene = SceneManager.GetActiveScene();
