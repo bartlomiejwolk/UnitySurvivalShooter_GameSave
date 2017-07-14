@@ -183,6 +183,10 @@ namespace CompleteProject
 
         private void ApplySaveDataToGame()
         {
+            // update camera position
+            Vector3 cameraPos = saveData.GameData.CameraPosition.Base();
+            Camera.main.transform.position = cameraPos;
+
             // update player health
             int healthValue = saveData.PlayerData.Health;
             playerHealth.currentHealth = healthValue;
