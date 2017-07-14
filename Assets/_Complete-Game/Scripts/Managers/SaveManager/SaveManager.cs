@@ -145,7 +145,7 @@ namespace CompleteProject
 
             foreach (var enemy in enemyGOs)
             {
-                string prefabName = enemy.name;
+                string prefabName = ConvertGameObjectNameToPrefabName(enemy.name);
                 Debug.Log("CreateEnemiesData(), prefabName: " + prefabName);
                 EnemyData enemyData = new EnemyData()
                 {
@@ -154,6 +154,14 @@ namespace CompleteProject
             }
 
             return null;
+        }
+
+        private string ConvertGameObjectNameToPrefabName(string enemyName)
+        {
+            int parenthesisIndex = enemyName.IndexOf("(");
+            string prefabName = enemyName.Substring(0, parenthesisIndex);
+
+            return prefabName;
         }
 
         private SVector3 GetPlayerSerializablePosition()
