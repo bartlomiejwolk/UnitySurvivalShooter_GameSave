@@ -25,6 +25,8 @@ namespace CompleteProject
         // If true, apply game save on SceneManager.sceneLoaded callback
         private bool applyGameSaveOnSceneLoaded;
 
+        #region UNITY_CALLBACKS
+
         void Awake()
         {
             // init singleton
@@ -80,6 +82,8 @@ namespace CompleteProject
         {
 
         }
+
+#endregion UNITY_CALLBACKS
 
         #region SAVING
 
