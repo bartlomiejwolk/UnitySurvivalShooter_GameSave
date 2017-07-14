@@ -58,7 +58,7 @@ namespace CompleteProject
                 return;
             }
 
-            Debug.Log("OnSceneLoaded()");
+            //Debug.Log("OnSceneLoaded()");
 
             playerHealth = FindObjectOfType<PlayerHealth>();
             enemyManager = FindObjectOfType<EnemyManager>();
@@ -69,7 +69,7 @@ namespace CompleteProject
         // Use this for initialization
         void Start()
         {
-            Debug.Log("SaveManager.Start()");
+            //Debug.Log("SaveManager.Start()");
             
         }
 
@@ -78,6 +78,8 @@ namespace CompleteProject
         {
 
         }
+
+        #region SAVING
 
         public void Save()
         {
@@ -114,6 +116,9 @@ namespace CompleteProject
 
             Debug.Log("SerializeSaveData()");
         }
+        #endregion SAVING
+
+        #region LOADING
 
         public void Load()
         {
@@ -126,18 +131,6 @@ namespace CompleteProject
             // reload level
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.buildIndex);
-        }
-
-        // TODO This could be wrapped in try/catch in case there's a null in the GameSave obj
-        private void ApplySaveDataToGame()
-        {
-            int healthValue = saveData.PlayerData.Health;
-            playerHealth.currentHealth = healthValue;
-            // TODO this should be done automatically in the PlayerHealth class via property or setter method
-            playerHealth.healthSlider.value = healthValue;
-            Debug.Log("ApplySaveDataToGame() saveData.PlayerData.Health: " + saveData.PlayerData.Health);
-            ScoreManager.score = saveData.PlayerData.Score;
-            Debug.Log("ApplySaveDataToGame() playerHealth.currentHealth: " + playerHealth.currentHealth);
         }
 
         private GameSave DeserializeSaveData()
@@ -154,6 +147,20 @@ namespace CompleteProject
 
             return saveData;
         }
+
+        private void ApplySaveDataToGame()
+        {
+            int healthValue = saveData.PlayerData.Health;
+            playerHealth.currentHealth = healthValue;
+            // TODO this should be done automatically in the PlayerHealth class via property or setter method
+            playerHealth.healthSlider.value = healthValue;
+            Debug.Log("ApplySaveDataToGame() saveData.PlayerData.Health: " + saveData.PlayerData.Health);
+            ScoreManager.score = saveData.PlayerData.Score;
+            Debug.Log("ApplySaveDataToGame() playerHealth.currentHealth: " + playerHealth.currentHealth);
+        }
+
+        // TODO This could be wrapped in try/catch in case there's a null in the GameSave obj
     }
+#endregion LOADING
 
 }
