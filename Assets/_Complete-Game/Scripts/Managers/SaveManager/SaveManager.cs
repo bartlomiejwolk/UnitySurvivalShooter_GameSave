@@ -14,16 +14,18 @@ namespace CompleteProject
         private EnemyManager enemyManager;
         private PlayerHealth playerHealth;
 
-        private string savePath;
+        // If true, apply game save on SceneManager.sceneLoaded callback
+        private bool applyGameSaveOnSceneLoaded;
 
         // Deserialized game save data
         private GameSave saveData;
+        private string savePath;
 
-        // If true, when a scene gets loaded, game save will be applied
-        private bool applyGameSaveOnSceneLoaded;
+        private const string saveFileName = "save.dat";
 
         void Awake()
         {
+            // init singleton
             if (instance == null)
             {
                 instance = this;
@@ -38,9 +40,8 @@ namespace CompleteProject
                 }
             }
 
-            // TODO create constant for the save file name
-            savePath = Application.persistentDataPath + "/save.dat";
-            Debug.Log(savePath);
+            savePath = Application.persistentDataPath + "/" + saveFileName;
+            //Debug.Log(savePath);
 
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
