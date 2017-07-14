@@ -39,9 +39,9 @@ namespace CompleteProject
 
         public void NotifyEnemyDied(GameObject deadEnemy)
         {
-            Debug.Log("NotifyEnemyDied(), enemy count: " + aliveEnemies.Count);
+            //Debug.Log("NotifyEnemyDied(), enemy count: " + aliveEnemies.Count);
             aliveEnemies.Remove(deadEnemy);
-            Debug.Log("NotifyEnemyDied(), new enemies count: " + aliveEnemies.Count);
+            //Debug.Log("NotifyEnemyDied(), new enemies count: " + aliveEnemies.Count);
         }
 
         void Spawn ()
@@ -61,7 +61,7 @@ namespace CompleteProject
 
             // Remember all spawned enemies
             aliveEnemies.Add(enemyRef);
-            Debug.Log("Enemy spawned! Enemies: " + aliveEnemies.Count);
+            //Debug.Log("Enemy spawned! Enemies: " + aliveEnemies.Count);
         }
     }
 }

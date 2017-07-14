@@ -138,7 +138,7 @@ namespace CompleteProject
                 Position = position
             };
 
-            Debug.Log("Save(), playerData.Position: " + playerData.Position);
+            //Debug.Log("Save(), playerData.Position: " + playerData.Position);
 
             return playerData;
         }
@@ -169,11 +169,17 @@ namespace CompleteProject
                 SVector3 enemySerializablePos = new SVector3(enemyPos);
                 //Debug.Log("CreateEnemiesData(), enemy position: " + enemyPos);
 
+                // get enemy rotation
+                Vector3 rot = enemy.transform.rotation.eulerAngles;
+                Debug.Log("CreateEnemiesData(), rot: " + rot);
+                SVector3 serializableRot = new SVector3(rot);
+
                 EnemyData enemyData = new EnemyData()
                 {
                     PrefabName = prefabName,
                     Health = enemyHealth,
-                    Position = enemySerializablePos
+                    Position = enemySerializablePos,
+                    Rotation = serializableRot
                 };
                 output.Add(enemyData);
             }
@@ -256,9 +262,9 @@ namespace CompleteProject
             Rigidbody playerRigidbody = playerHealth.transform.GetComponent<Rigidbody>();
             //playerRigidbody.position = saveData.PlayerData.Position.Base();
             playerHealth.transform.position = saveData.PlayerData.Position.Base();
-            Debug.Log("ApplySaveDataToGame(), playerData.Position: " + saveData.PlayerData.Position);
+            //Debug.Log("ApplySaveDataToGame(), playerData.Position: " + saveData.PlayerData.Position);
             //Debug.Log("ApplySaveDataToGame(), playerRigidbody.position: " + playerRigidbody.position);
-            Debug.Log("ApplySaveDataToGame(), playerHealth.transform.position: " + playerHealth.transform.position);
+            //Debug.Log("ApplySaveDataToGame(), playerHealth.transform.position: " + playerHealth.transform.position);
 
             // update game score
             ScoreManager.score = saveData.PlayerData.Score;
@@ -273,11 +279,16 @@ namespace CompleteProject
             foreach (var enemyData in saveData.EnemiesData)
             {
                 // instantiate enemy
-                Debug.Log("prefabName: " + enemyData.PrefabName);
+                //Debug.Log("prefabName: " + enemyData.PrefabName);
                 Object prefab = Resources.Load(enemyData.PrefabName);
                 Vector3 pos = enemyData.Position.Base();
-                // TODO implement rotation
-                GameObject instanceRef = (GameObject)Instantiate(prefab, pos, Quaternion.identity);
+                // get rotation
+                Vector3 rot = enemyData.Rotation.Base();
+                Quaternion quaternionRot = Quaternion.Euler(rot);
+                Debug.Log("ApplyEnemySaveData(), saved rot: " + rot);
+
+                GameObject instanceRef = (GameObject)Instantiate(prefab, pos, quaternionRot);
+                Debug.Log("ApplyEnemySaveData(), applied rot: " + instanceRef.transform.rotation);
 
                 // update `EnemyManager`
                 enemyManager.AddSpawnedEnemy(instanceRef);
