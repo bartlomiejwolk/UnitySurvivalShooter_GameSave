@@ -141,6 +141,18 @@ namespace CompleteProject
 
         private List<EnemyData> CreateEnemiesData()
         {
+            List<GameObject> enemyGOs = enemyManager.GetAllAliveEnemies();
+
+            foreach (var enemy in enemyGOs)
+            {
+                string prefabName = enemy.name;
+                Debug.Log("CreateEnemiesData(), prefabName: " + prefabName);
+                EnemyData enemyData = new EnemyData()
+                {
+                    
+                };
+            }
+
             return null;
         }
 

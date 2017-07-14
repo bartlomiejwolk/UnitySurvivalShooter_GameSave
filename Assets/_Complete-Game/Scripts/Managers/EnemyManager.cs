@@ -10,6 +10,7 @@ namespace CompleteProject
         public float spawnTime = 3f;            // How long between each spawn.
         public Transform[] spawnPoints;         // An array of the spawn points this enemy can spawn from.
 
+        private static readonly List<GameObject> aliveEnemies = new List<GameObject>();
 
         void Start ()
         {
@@ -19,7 +20,14 @@ namespace CompleteProject
 
         public List<GameObject> GetAllAliveEnemies()
         {
-            return new List<GameObject>();
+            return aliveEnemies;
+        }
+
+        public void NotifyEnemyDied(GameObject deadEnemy)
+        {
+            Debug.Log("NotifyEnemyDied(), enemy count: " + aliveEnemies.Count);
+            aliveEnemies.Remove(deadEnemy);
+            Debug.Log("NotifyEnemyDied(), new enemies count: " + aliveEnemies.Count);
         }
 
         void Spawn ()
@@ -35,7 +43,11 @@ namespace CompleteProject
             int spawnPointIndex = Random.Range (0, spawnPoints.Length);
 
             // Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
-            Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+            GameObject enemyRef = Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+
+            // Remember all spawned enemies
+            aliveEnemies.Add(enemyRef);
+            Debug.Log("Enemy spawned! Enemies: " + aliveEnemies.Count);
         }
     }
 }

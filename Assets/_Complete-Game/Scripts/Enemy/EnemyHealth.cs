@@ -10,14 +10,14 @@ namespace CompleteProject
         public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
         public AudioClip deathClip;                 // The sound to play when the enemy dies.
 
-
         Animator anim;                              // Reference to the animator.
         AudioSource enemyAudio;                     // Reference to the audio source.
         ParticleSystem hitParticles;                // Reference to the particle system that plays when the enemy is damaged.
         CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
+        private EnemyManager enemyManager;
+
         bool isDead;                                // Whether the enemy is dead.
         bool isSinking;                             // Whether the enemy has started sinking through the floor.
-
 
         void Awake ()
         {
@@ -29,6 +29,8 @@ namespace CompleteProject
 
             // Setting the current health when the enemy first spawns.
             currentHealth = startingHealth;
+
+            enemyManager = FindObjectOfType<EnemyManager>();
         }
 
 
@@ -85,6 +87,13 @@ namespace CompleteProject
             // Change the audio clip of the audio source to the death clip and play it (this will stop the hurt clip playing).
             enemyAudio.clip = deathClip;
             enemyAudio.Play ();
+
+            // Notify `EnemyManager` about the death
+            // TODO Create event and make `EnemyManager` listen to it
+            if (enemyManager)
+            {
+                enemyManager.NotifyEnemyDied(gameObject);                
+            }
         }
 
 
