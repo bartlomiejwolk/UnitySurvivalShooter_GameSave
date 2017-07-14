@@ -88,13 +88,29 @@ namespace CompleteProject
             //List<GameObject> enemies = enemyManager.GetAllAliveEnemies();
 
             // create save data object
+            GameData gameData = CreateGameData();
             PlayerData playerData = CreatePlayerData();
             GameSave gameSaveData = new GameSave
             {
-                PlayerData = playerData
+                PlayerData = playerData,
+                GameData = gameData
             };
 
             SerializeSaveData(gameSaveData);
+        }
+
+        private GameData CreateGameData()
+        {
+            // get camera position
+            Vector3 cameraPos = Camera.main.transform.position;
+            SVector3 serializableCameraPos = new SVector3(cameraPos);
+
+            GameData data = new GameData()
+            {
+                CameraPosition = serializableCameraPos
+            };
+
+            return data;
         }
 
         private PlayerData CreatePlayerData()

@@ -119,6 +119,7 @@
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\PauseManager.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\EnemiesData.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\EnemyData.cs" />
+     <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\GameData.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\GameSave.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\PlayerData.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Managers\SaveManager\SaveManager.cs" />
@@ -127,6 +128,7 @@
      <Compile Include="Assets\_Complete-Game\Scripts\Player\PlayerHealth.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Player\PlayerMovement.cs" />
      <Compile Include="Assets\_Complete-Game\Scripts\Player\PlayerShooting.cs" />
+     <Compile Include="Assets\_Complete-Game\Scripts\Types.cs" />
      <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\MotionBlur.cginc" />
      <None Include="Assets\PostProcessing\Resources\Shaders\Fog.shader" />
