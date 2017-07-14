@@ -202,12 +202,13 @@ namespace CompleteProject
         public void Load()
         {
             saveData = DeserializeSaveData();
-
             // TODO if saveData is empty, inform the user end return
-
             applyGameSaveOnSceneLoaded = true;
+            ReloadLevel();
+        }
 
-            // reload level
+        private static void ReloadLevel()
+        {
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.buildIndex);
         }
@@ -229,26 +230,33 @@ namespace CompleteProject
 
         private void ApplySaveDataToGame()
         {
-            // update camera position
-            Vector3 cameraPos = saveData.GameData.CameraPosition.Base();
-            Camera.main.transform.position = cameraPos;
+            ApplyCameraPosition();
+            ApplyPlayerHealth();
+            ApplyPlayerPosition();
+            ScoreManager.score = saveData.PlayerData.Score;
+            ApplyEnemySaveData();
+        }
 
-            // update player health
-            int healthValue = saveData.PlayerData.Health;
-            playerHealth.currentHealth = healthValue;
-            // TODO this should be done automatically in the PlayerHealth class via property or setter method
-            playerHealth.healthSlider.value = healthValue;
-
-            // update player position
+        private void ApplyPlayerPosition()
+        {
             // TODO update through rigidbody instead of transform
             Rigidbody playerRigidbody = playerHealth.transform.GetComponent<Rigidbody>();
             //playerRigidbody.position = saveData.PlayerData.Position.Base();
             playerHealth.transform.position = saveData.PlayerData.Position.Base();
+        }
 
-            // update game score
-            ScoreManager.score = saveData.PlayerData.Score;
+        private void ApplyPlayerHealth()
+        {
+            int healthValue = saveData.PlayerData.Health;
+            playerHealth.currentHealth = healthValue;
+            // TODO this should be done automatically in the PlayerHealth class via property or setter method
+            playerHealth.healthSlider.value = healthValue;
+        }
 
-            ApplyEnemySaveData();
+        private void ApplyCameraPosition()
+        {
+            Vector3 cameraPos = saveData.GameData.CameraPosition.Base();
+            Camera.main.transform.position = cameraPos;
         }
 
         // TODO Don't use Resources folder. Use direct prefab references.
