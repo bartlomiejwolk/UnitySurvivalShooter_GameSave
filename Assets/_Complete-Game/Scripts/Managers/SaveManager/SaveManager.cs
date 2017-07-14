@@ -143,13 +143,32 @@ namespace CompleteProject
         {
             List<GameObject> enemyGOs = enemyManager.GetAllAliveEnemies();
 
+            // TODO extract method
             foreach (var enemy in enemyGOs)
             {
+                // get prefab name
                 string prefabName = ConvertGameObjectNameToPrefabName(enemy.name);
-                Debug.Log("CreateEnemiesData(), prefabName: " + prefabName);
+                //Debug.Log("CreateEnemiesData(), prefabName: " + prefabName);
+
+                // get enemy health
+                EnemyHealth enemyHealthComp = enemy.GetComponent<EnemyHealth>();
+                int enemyHealth = 0;
+                if (enemyHealthComp)
+                {
+                    enemyHealth = enemyHealthComp.currentHealth;
+                }
+                Debug.Log("CreateEnemiesData(), enemy health: " + enemyHealth);
+
+                // get enemy position
+                Vector3 enemyPos = enemy.transform.position;
+                SVector3 enemySerializablePos = new SVector3(enemyPos);
+                Debug.Log("CreateEnemiesData(), enemy position: " + enemyPos);
+
                 EnemyData enemyData = new EnemyData()
                 {
-                    
+                    PrefabName = prefabName,
+                    Health = enemyHealth,
+                    Position = enemySerializablePos
                 };
             }
 
