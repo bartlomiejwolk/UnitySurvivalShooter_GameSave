@@ -2,6 +2,7 @@
 
 namespace CompleteProject
 {
+    // TODO add timestamp
     [System.Serializable]
     public struct GameSave
     {

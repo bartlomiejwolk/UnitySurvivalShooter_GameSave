@@ -75,6 +75,12 @@ namespace CompleteProject
 
         public void Save()
         {
+            if (!playerHealth) return;
+            if (!enemyManager) return;
+            if (!Camera.main) return;
+
+            // TODO log info about null refs.
+
             GameData gameData = CreateGameData();
             PlayerData playerData = CreatePlayerData();
             List<EnemyData> enemiesData = CreateEnemiesData();
@@ -145,6 +151,14 @@ namespace CompleteProject
             return output;
         }
 
+        private SVector3 GetPlayerSerializablePosition()
+        {
+            Vector3 position = playerHealth.transform.position;
+            SVector3 serializablePos = new SVector3(position);
+
+            return serializablePos;
+        }
+
         private static SVector3 GetEnemySerializableRotation(GameObject enemy)
         {
             Vector3 rot = enemy.transform.rotation.eulerAngles;
@@ -178,14 +192,6 @@ namespace CompleteProject
             return prefabName;
         }
 
-        private SVector3 GetPlayerSerializablePosition()
-        {
-            Vector3 position = playerHealth.transform.position;
-            SVector3 serializablePos = new SVector3(position);
-
-            return serializablePos;
-        }
-
         private void SerializeSaveData(GameSave gameSaveData)
         {
             BinaryFormatter binaryFormatter = new BinaryFormatter();
@@ -202,7 +208,7 @@ namespace CompleteProject
         public void Load()
         {
             saveData = DeserializeSaveData();
-            // TODO if saveData is empty, inform the user end return
+            // TODO if saveData is empty (check timestamp), inform the user end return.
             applyGameSaveOnSceneLoaded = true;
             ReloadLevel();
         }
@@ -230,11 +236,21 @@ namespace CompleteProject
 
         private void ApplySaveDataToGame()
         {
+            if (!playerHealth) return;
+            if (!enemyManager) return;
+            if (!Camera.main) return;
+
             ApplyCameraPosition();
-            ApplyPlayerHealth();
             ApplyPlayerPosition();
+            ApplyPlayerHealth();
             ScoreManager.score = saveData.PlayerData.Score;
             ApplyEnemySaveData();
+        }
+
+        private void ApplyCameraPosition()
+        {
+            Vector3 cameraPos = saveData.GameData.CameraPosition.Base();
+            Camera.main.transform.position = cameraPos;
         }
 
         private void ApplyPlayerPosition()
@@ -251,12 +267,6 @@ namespace CompleteProject
             playerHealth.currentHealth = healthValue;
             // TODO this should be done automatically in the PlayerHealth class via property or setter method
             playerHealth.healthSlider.value = healthValue;
-        }
-
-        private void ApplyCameraPosition()
-        {
-            Vector3 cameraPos = saveData.GameData.CameraPosition.Base();
-            Camera.main.transform.position = cameraPos;
         }
 
         // TODO Don't use Resources folder. Use direct prefab references.
