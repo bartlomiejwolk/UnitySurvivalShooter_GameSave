@@ -293,6 +293,11 @@ namespace CompleteProject
             Vector3 rot = enemyData.Rotation.Base();
             Quaternion quaternionRot = Quaternion.Euler(rot);
             GameObject instanceRef = (GameObject) Instantiate(prefab, pos, quaternionRot);
+            EnemyHealth healthComp = instanceRef.GetComponent<EnemyHealth>();
+            if (healthComp)
+            {
+                healthComp.currentHealth = enemyData.Health;
+            }
 
             // update `EnemyManager`
             enemyManager.AddSpawnedEnemy(instanceRef);
