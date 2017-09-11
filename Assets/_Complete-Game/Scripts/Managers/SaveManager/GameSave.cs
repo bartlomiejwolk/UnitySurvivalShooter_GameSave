@@ -2,9 +2,8 @@
 
 namespace CompleteProject
 {
-    // TODO add timestamp
     [System.Serializable]
-    public struct GameSave
+    public class GameSave
     {
         public GameData GameData;
         public PlayerData PlayerData;

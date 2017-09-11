@@ -29,7 +29,7 @@ namespace CompleteProject
         private PlayerHealth playerHealth;
 
         /*
-        Contains loaded game save data.
+        Contains loaded game save data. It's set to null after game data is applied.
         */
         private GameSave saveData;
 
@@ -37,9 +37,6 @@ namespace CompleteProject
         Filesystem path for the game save file.
         */
         private string savePath;
-
-        // If true, apply game save on SceneManager.sceneLoaded callback
-        private bool applyGameSaveOnSceneLoaded;
 
         #region UNITY_CALLBACKS
 
@@ -76,10 +73,7 @@ namespace CompleteProject
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
         {
-            if (!applyGameSaveOnSceneLoaded)
-            {
-                return;
-            }
+            if (saveData == null) return;
 
             playerHealth = FindObjectOfType<PlayerHealth>();
             enemyManager = FindObjectOfType<EnemyManager>();
@@ -231,8 +225,6 @@ namespace CompleteProject
         public void Load()
         {
             saveData = DeserializeSaveData();
-            // TODO if saveData is empty (check timestamp), inform the user end return.
-            applyGameSaveOnSceneLoaded = true;
             ReloadLevel();
         }
 
@@ -268,6 +260,8 @@ namespace CompleteProject
             ApplyPlayerHealth();
             ScoreManager.score = saveData.PlayerData.Score;
             ApplyEnemySaveData();
+            // clear out temp. save data since it's no longer needed
+            saveData = null;
         }
 
         private void ApplyCameraPosition()
