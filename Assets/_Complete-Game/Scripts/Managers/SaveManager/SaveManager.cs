@@ -221,7 +221,6 @@ namespace CompleteProject
 
         #region LOADING
 
-        // TODO This could be wrapped in try/catch in case there's a null in the GameSave obj
         public void Load()
         {
             saveData = DeserializeSaveData();
@@ -260,7 +259,7 @@ namespace CompleteProject
             ApplyPlayerHealth();
             ScoreManager.score = saveData.PlayerData.Score;
             ApplyEnemySaveData();
-            // clear out temp. save data since it's no longer needed
+            // clear out temp. save data since `OnSceneLoaded()` relies on it
             saveData = null;
         }
 
@@ -284,7 +283,7 @@ namespace CompleteProject
             playerHealth.healthSlider.value = healthValue;
         }
 
-        // TODO Don't use Resources folder. Use direct prefab references.
+        // TODO don't use Resources folder. Use direct prefab references.
         private void ApplyEnemySaveData()
         {
             foreach (var enemyData in saveData.EnemiesData)
