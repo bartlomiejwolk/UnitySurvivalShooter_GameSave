@@ -3,6 +3,8 @@ README
 
 Save Manager component for _Unity Survival Shooter_ example project.
 
+[Component source](https://github.com/bartlomiejwolk/UnitySurvivalShooter_GameSave/tree/master/Assets/_Complete-Game/Scripts/Managers/SaveManager)
+
 Licensed under MIT license. See LICENSE file in the project root.
 
 ![Save Manager](/Resources/cover_screenshot.png?raw=true "Save Manager")
