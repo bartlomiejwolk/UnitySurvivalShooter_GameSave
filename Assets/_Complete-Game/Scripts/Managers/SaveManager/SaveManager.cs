@@ -8,24 +8,37 @@ using Object = UnityEngine.Object;
 
 namespace CompleteProject
 {
+    // TODO Make it completely decoupled from the game code.
     public class SaveManager : MonoBehaviour
     {
         private static SaveManager instance;
 
-        // Settings
+        /*
+        Game save file name.
+        */
         private const string saveFileName = "save.dat";
 
-        // Refs
+        /*
+        Ref. to enemy mananger.
+        */
         private EnemyManager enemyManager;
+
+        /*
+        Ref. to player health component.
+        */
         private PlayerHealth playerHealth;
 
-        // Helpers
-        // TODO see if you can remove any of them
+        /*
+        Contains loaded game save data.
+        */
         private GameSave saveData;
+
+        /*
+        Filesystem path for the game save file.
+        */
         private string savePath;
 
         // If true, apply game save on SceneManager.sceneLoaded callback
-        // TODO see if using flag can be avoided
         private bool applyGameSaveOnSceneLoaded;
 
         #region UNITY_CALLBACKS
